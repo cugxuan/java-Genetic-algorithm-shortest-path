@@ -1,5 +1,6 @@
 # java-routing
 在网页点击然后服务器使用遗传算法计算后返回最短路径
+完成GET和POST的请求
 
 使用Java Servlet
 使用了D3可视化库进行画图。
