@@ -8,8 +8,16 @@ import java.io.*;
 public class Routing extends HttpServlet {
 	private PrintWriter writer;
 	long startTime,endTime;
-	int func;
-	public void doGet(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
+	int func,num;
+	public void doPost(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
+		//将所有的点添加进城市中
+//		System.out.println(req);
+		num=Integer.parseInt(req.getParameter("clickNum"));
+		for(int i=1;i<=num;i++){
+	        int x=Integer.parseInt(req.getParameter("x"+i));
+	        int y=Integer.parseInt(req.getParameter("y"+i));
+	        TSP_GA.add(x,y);
+		}
 		func=Integer.parseInt(req.getParameter("fun"));
 		if(func==1){
 			//如果请求使用遗传算法
@@ -34,14 +42,9 @@ public class Routing extends HttpServlet {
 			writer.print(s);
 			writer.flush();
 			System.out.println(s);
-		}else if(func==3){
-			//进行数据的清除
-			TSP_GA.clean();
 		}
 	}
-    public void doPost (HttpServletRequest req,HttpServletResponse res)throws ServletException ,IOException{
-        int x=Integer.parseInt(req.getParameter("x"));
-        int y=Integer.parseInt(req.getParameter("y"));
-        TSP_GA.add(x,y);
-     }
+    public void doGet (HttpServletRequest req,HttpServletResponse res)throws ServletException ,IOException{
+
+    }
 }

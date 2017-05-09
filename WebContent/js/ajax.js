@@ -1,33 +1,17 @@
+clickNum=0;  //标记点击个数
+stringToServlet=""; //传给服务器后台的数据
 function ajax(){
-    //1.创建对象
-    var oAjax = null;
-    if(window.XMLHttpRequest){
-        oAjax = new XMLHttpRequest();
-    }else{
-        oAjax = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-	if (oAjax != null) {
-		oAjax.onreadystatechange = state_Change;
-		oAjax.open("POST", "Routing", true); // 2.连接服务器 url直接填的"Routing"
-		oAjax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-		var x=String(event.clientX);
-		var y=String(event.clientY);
-//	    alert(event.clientX+"String:"+event.clientY);//验证值成功
-		oAjax.send('x='+x+'&y='+y); // 3.发送请求
-	} else {
-		alert("Your browser does not support XMLHTTP.");
-	}
-	//4.接收返回
-	function state_Change() {
-		if (oAjax.readyState == 4) {// 4 = "loaded"
-			if (oAjax.status == 200) {// 200 = OK
-				// ...our code here...
-			} else {
-				alert("Problem retrieving XML data");
-			}
-		}
-	}
+//将每次点击的内容保存下来以字符串的形式
+    var x=String(event.clientX);
+	var y=String(event.clientY);
+//	alert(event.clientX+"String:"+event.clientY);//验证值成功
+	//字符串的形式是x1=1&y1=2&x1=1&y2=2	
+	if(clickNum==0)
+		stringToServlet+="x"+(clickNum+1)+"="+x+"&y"+(clickNum+1)+"="+y;
+	else
+		stringToServlet+="&x"+(clickNum+1)+"="+x+"&y"+(clickNum+1)+"="+y;
+//	console.log(stringToServlet);
+	clickNum++;
 }
 
 function ajaxsend1() {
@@ -39,16 +23,20 @@ function ajaxsend1() {
 		oAjax = new ActiveXObject("Microsoft.XMLHTTP");
 	}
 
+	stringToServlet+="&fun=1&clickNum="+clickNum;
 	if (oAjax != null) {
 		oAjax.onreadystatechange = state_Change;
-		oAjax.open("GET", "Routing?fun=1", true); // 2.连接服务器 url直接填的"Routing"
+		oAjax.open("POST", "Routing", true); // 2.连接服务器 url直接填的"Routing"
 		oAjax.setRequestHeader("Content-Type",
 				"application/x-www-form-urlencoded");
 		//在Get请求不使用send传递数据，填入null
-		oAjax.send(null);
+		oAjax.send(stringToServlet);
 	} else {
 		alert("Your browser does not support XMLHTTP.");
 	}
+	
+	clickNum=0;
+	stringToServlet="";
 	// 4.接收返回
 	function state_Change() {
 		if (oAjax.readyState == 4) {// 4 = "loaded"
@@ -77,15 +65,18 @@ function ajaxsend2() {
 		oAjax = new ActiveXObject("Microsoft.XMLHTTP");
 	}
 
+	stringToServlet+="&fun=2&clickNum="+clickNum;
 	if (oAjax != null) {
 		oAjax.onreadystatechange = state_Change;
-		oAjax.open("GET", "Routing?fun=2", true); // 2.连接服务器 url直接填的"Routing"
+		oAjax.open("POST", "Routing", true); // 2.连接服务器 url直接填的"Routing"
 		oAjax.setRequestHeader("Content-Type",
 				"application/x-www-form-urlencoded");
-		oAjax.send(null);
+		oAjax.send(stringToServlet);
 	} else {
 		alert("Your browser does not support XMLHTTP.");
 	}
+	clickNum=0;
+	stringToServlet="";
 	// 4.接收返回
 	function state_Change() {
 		if (oAjax.readyState == 4) {// 4 = "loaded"
@@ -98,36 +89,6 @@ function ajaxsend2() {
 					len++;
 				}
 				print();
-			} else {
-				// alert("Problem retrieving XML data");
-			}
-		}
-	}
-}
-function ajaxsend3() {
-	// 1.创建对象
-	var oAjax = null;
-	if (window.XMLHttpRequest) {
-		oAjax = new XMLHttpRequest();
-	} else {
-		oAjax = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-
-	if (oAjax != null) {
-		oAjax.onreadystatechange = state_Change;
-		oAjax.open("GET", "Routing?fun=3", true); // 2.连接服务器 url直接填的"Routing"
-		oAjax.setRequestHeader("Content-Type",
-				"application/x-www-form-urlencoded");
-		oAjax.send(null);
-	} else {
-		alert("Your browser does not support XMLHTTP.");
-	}
-	// 4.接收返回
-	function state_Change() {
-		if (oAjax.readyState == 4) {// 4 = "loaded"
-			if (oAjax.status == 200) {// 200 = OK
-				//自动刷新网页
-				location.replace(location);
 			} else {
 				// alert("Problem retrieving XML data");
 			}
