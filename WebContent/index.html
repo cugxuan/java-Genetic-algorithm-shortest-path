@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>鼠标点击效果</title>
+</head>
+<style>
+*{margin: 0;padding: 0;}
+body {
+    background: white;
+}
+.box{background: #F8F4E3;solid #F00;border:1px solid red; }
+.move1{display: none;}
+.move2{display: none;}
+</style>
+<body>
+</body>
+<script src="js/mo.min.js"></script>
+<script type="text/javascript" src="js/d3/d3.v3.js"></script>
+<script type="text/javascript" src="js/ajax.js"></script>
+<script type="text/javascript" src="js/trick.js"></script>
+<script type="text/javascript">
+//创建svg对象并且设置长宽
+  var svg=d3.select("body").append("svg");
+  svg.attr("width",1000).attr("height",500);
+  svg.attr('class','box')
+// 使用circles对象进行画圆
+      var yuan = svg.append("circle")
+         .attr("r", 5)
+         .attr('class','move1');
+// 打印坐标位置信息
+      var wenzi = svg.append("text")
+            .attr("font-family", "sans-serif")  
+            .attr("font-size", "11px")  
+            .attr("fill", "red")
+            .attr('class','move2')
+//鼠标move操作
+      svg.on('mousemove',function(event){
+          var event = event || window.event;
+          yuan.attr('style','display:block');
+          wenzi.attr('style','display:block');  
+          yuan.attr('cx',event.offsetX);
+          yuan.attr('cy',event.offsetY);
+          if(event.offsetX <=950){
+            wenzi.text(function(d) {  
+              return event.clientX + "," + event.clientY;  
+            })
+            wenzi.attr("x", event.offsetX+7)
+            wenzi.attr("y", event.offsetY+7)
+          }else{
+            wenzi.text(function(d) {  
+              return event.clientX + "," + event.clientY;  
+            })
+            wenzi.attr("x", event.offsetX-50)
+            wenzi.attr("y", event.offsetY+7) 
+          }
+      })
+//鼠标click操作
+  svg.on('click',function(event){
+    var event = event || window.event;
+    // num的值复位
+      circle1.tune({ x: event.pageX, y: event.pageY }).replay();
+      circle2.tune({ x: event.pageX, y: event.pageY }).replay();
+	// 使用circles对象进行画圆
+      svg.append("circle")
+         .attr("cx", event.offsetX)
+         .attr("cy", event.offsetY)
+         .attr("r", 5);
+	// 打印坐标位置信息
+      if(event.offsetX <=950){
+        svg.append("text")
+            .text(function(d) {
+              return event.clientX + "," + event.clientY;  
+            })
+            .attr("x", event.offsetX+7)
+            .attr("y", event.offsetY+7)
+            .attr("font-family", "sans-serif")  
+            .attr("font-size", "11px")  
+            .attr("fill", "red"); 
+      }else{
+        svg.append("text")
+            .text(function(d) {  
+              return event.clientX + "," + event.clientY;  
+            })
+            .attr("x", event.offsetX-50)
+            .attr("y", event.offsetY+7)
+            .attr("font-family", "sans-serif")  
+            .attr("font-size", "11px")  
+            .attr("fill", "red"); 
+      }
+      // 调用传输
+      ajax();
+  })
+  //让标签和
+	d3.select("body").append("p");
+	var submit = d3.select("body").append("input");
+	submit.attr('type', 'submit').attr('value', '遗传算法');
+	submit.on('click', function(event) {
+		//调用函数
+		ajaxsend1();
+	})
+	var submit1 = d3.select("body").append("input");
+	submit1.attr('type', 'submit').attr('value', '基本贪心');
+	submit1.on('click', function(event) {
+		//调用函数
+		ajaxsend2();
+	})
+	var submit2 = d3.select("body").append("input");
+	submit2.attr('type', 'submit').attr('value', '重置');
+	submit2.on('click', function(event) {
+		//调用函数
+		ajaxsend3();
+	})
+</script>
+</html>
