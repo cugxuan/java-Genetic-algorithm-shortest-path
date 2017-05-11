@@ -2,6 +2,7 @@
 在网页点击然后服务器使用遗传算法计算后返回最短路径
 完成GET和POST的请求
 
+使用Socket来完成内容
 使用Java Servlet
 使用了D3可视化库进行画图。
 使用原生ajax进行JavaScript前端和后台Java Servlet的交互。
