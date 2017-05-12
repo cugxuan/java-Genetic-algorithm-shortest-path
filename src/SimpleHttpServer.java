@@ -66,16 +66,14 @@ public class SimpleHttpServer implements Runnable {
                         }
                         
                         if(resource.equals("Routing")&&method.equals("POST")){
-                            
-                            if((line=in.readLine())==null){
+                        	if((line=in.readLine())==null){
                             	System.out.println("null");
                         	}
-                            System.out.println(line);
-                            
                             String ConTentType="Content-Type: application/javascript;charset=UTF-8";  //js的内容发送表明类型
-                            fileService("1.txt", client,ConTentType);
-                        	
-                        	closeSocket(client);
+                        	Routing r=new Routing();
+                            r.doPost(line,client,ConTentType);
+
+                            closeSocket(client);
                         }
                         
                     } catch(Exception e) {
