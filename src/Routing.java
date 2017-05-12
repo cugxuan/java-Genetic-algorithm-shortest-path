@@ -14,7 +14,6 @@ public class Routing{
         int num=Integer.parseInt(pair[1]);
         pair = fri[1].split("=");
         int func=Integer.parseInt(pair[1]);
-        System.out.println(num+"  "+func);
         int x,y;
         for (int i=2;i<num*2+1;i++) {
             pair = fri[i++].split("=");
@@ -22,7 +21,6 @@ public class Routing{
             pair = fri[i].split("=");
             y=Integer.parseInt(pair[1]);
             TSP.add(x, y);
-            System.out.println(x+"  "+y+"  "+i);
         }
         
         String s="";

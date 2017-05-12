@@ -43,7 +43,7 @@ public class SimpleHttpServer implements Runnable {
 
                         // 读取所有浏览器发送过来的请求参数头部信息
                         while( (line = in.readLine()) != null) {
-                            System.out.println(line);
+//                            System.out.println(line);
                             if(line.equals("")) break;  //读到尾部即跳出
                         }
                         
